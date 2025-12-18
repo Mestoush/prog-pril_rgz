@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Мои расходы</title></head>
+<body>
+  <h1>Мои расходы</h1>
+
+  <h2>Добавить расход</h2>
+  <form action="/add" method="post">
+    <input name="amount" placeholder="Сумма">
+    <input name="category" placeholder="Категория">
+    <input name="description" placeholder="Описание">
+    <button type="submit">Добавить</button>
+  </form>
+
+  <h2>Список расходов</h2>
+  <ul>
+    {% for e in expenses %}
+      <li>
+        {{ e[1] }} руб — {{ e[2] }} ({{ e[3] }})
+        <form action="/edit" method="post" style="display:inline;">
+          <input type="hidden" name="id" value="{{ e[0] }}">
+          <input name="category" placeholder="Новая категория">
+          <button type="submit">Редактировать</button>
+        </form>
+        <form action="/delete" method="post" style="display:inline;">
+          <input type="hidden" name="id" value="{{ e[0] }}">
+          <button type="submit">Удалить</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <form action="/auth/logout" method="post">
+    <button type="submit">Выйти</button>
+  </form>
+</body>
+</html>

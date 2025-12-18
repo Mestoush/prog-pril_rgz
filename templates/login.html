@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Вход</title></head>
+<body>
+  <h1>Авторизация</h1>
+
+  <h2>Регистрация</h2>
+  <form action="/auth/register" method="post">
+    <input name="username" placeholder="Логин">
+    <input name="password" type="password" placeholder="Пароль">
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+
+  <h2>Вход</h2>
+  <form action="/auth/login" method="post">
+    <input name="username" placeholder="Логин">
+    <input name="password" type="password" placeholder="Пароль">
+    <button type="submit">Войти</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test-and-sec:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: prog-pril_rgz
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Run unit tests
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/prog-pril_rgz
+          SECRET_KEY: test-secret
+        run: pytest -v
+      - name: Run bandit security check
+        run: bandit -r . -f json -o bandit-report.json || true
+      - name: Display bandit report
+        run: cat bandit-report.json
