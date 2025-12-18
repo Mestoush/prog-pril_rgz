@@ -1,4 +1,4 @@
-name: CI
+name: Дневник расходов - CI
 
 on:
   push:
@@ -22,6 +22,11 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -r requirements.txt
+      - name: Initialize database
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql -h localhost -U postgres -d prog-pril_rgz < init_db.sql
       - name: Run unit tests
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/prog-pril_rgz
@@ -29,5 +34,5 @@ jobs:
         run: pytest -v
       - name: Run bandit security check
         run: bandit -r . -f json -o bandit-report.json || true
-      - name: Display bandit report
-        run: cat bandit-report.json
+      # - name: Display bandit report
+      #   run: cat bandit-report.json
