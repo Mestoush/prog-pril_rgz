@@ -175,11 +175,11 @@ def delete_expense():
         cur.close()
         conn.close()
         return "not found", 404
+    record_audit(current_user.id, "delete", expense_id)
     cur.execute("DELETE FROM expenses WHERE id=%s", (expense_id,))
     conn.commit()
     cur.close()
     conn.close()
-    record_audit(current_user.id, "delete", expense_id)
     return redirect(url_for("expenses_page"))
 
 if __name__ == "__main__":
