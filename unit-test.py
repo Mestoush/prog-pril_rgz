@@ -6,7 +6,7 @@ def client():
     app.config["TESTING"] = True
     return app.test_client()
 
-def register_and_login(client, username="u1", password="p1"):
+def _register_and_login(client, username="u1", password="p1"):
     # Регистрация
     client.post("/auth/register", data={"username": username, "password": password})
     # Логин
@@ -16,7 +16,7 @@ def register_and_login(client, username="u1", password="p1"):
 
 def test_crud_cycle(client):
     # Авторизация
-    register_and_login(client)
+    _register_and_login(client)
 
     # Добавление записи
     r = client.post("/add", data={"amount": "100.5", "category": "food", "description": "lunch"})
